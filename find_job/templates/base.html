@@ -19,7 +19,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
@@ -28,17 +28,54 @@
             </li>
             {% if user.is_authenticated %}
               <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:update' %}">Настройки</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
               </li>
             {% else %}
               <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:registration' %}">Регистрация</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
               </li>
             {% endif %}
+
+
           </ul>
         </div>
       </div>
     </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-8 mx-auto my-3">
+        {% if messages %}
+
+              {% for message in messages %}
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+              {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                {% endif %}
+
+
+              {% endfor %}
+
+          {% endif %}
+      </div>
+    </div>
+  </div>
   <div class="container">
     {% block content %}{% endblock %}
   </div>
