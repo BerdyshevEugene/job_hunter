@@ -1,6 +1,7 @@
 from sqlite3 import Timestamp
 from django.db import models
-from slugify import slugify
+
+from scraping.utils import from_cyrillic_to_eng
 
 
 def default_urls():
@@ -12,14 +13,16 @@ class City(models.Model):
     slug = models.SlugField(max_length=50, blank=True, unique=True)
 
     class Meta:
+        verbose_name = 'city'
         verbose_name_plural = 'cities'
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(City, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = from_cyrillic_to_eng(str(self.name))
+        super().save(*args, **kwargs)
 
 
 class Specialization(models.Model):
@@ -27,14 +30,16 @@ class Specialization(models.Model):
     slug = models.SlugField(max_length=50, blank=True, unique=True)
 
     class Meta:
+        verbose_name = 'specialization'
         verbose_name_plural = 'specializations'
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Specialization, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = from_cyrillic_to_eng(str(self.name))
+        super().save(*args, **kwargs)
 
 
 class Vacancy(models.Model):
@@ -55,6 +60,7 @@ class Vacancy(models.Model):
     timestamp = models.DateField(auto_now_add=True)
 
     class Meta:
+        verbose_name = 'vacancy'
         verbose_name_plural = 'vacancies'
         ordering = ['-timestamp']
 

@@ -14,17 +14,17 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'find_job.settings'
 import django
 django.setup()
 
-from find_jobs.parser import *
-from find_jobs.models import Vacancy, City, Specialization, Error, Url
-
+from scraping.parsers import *
+from scraping.models import Vacancy, Error, Url
 
 User = get_user_model()
 
-parser = (
+parsers = (
     (work_hh, 'work_hh'),
     (work_habr, 'work_habr'),
 )
 jobs, errors = [], []
+
 
 def get_settings():
     qs = User.objects.filter(send_email=True).values()
@@ -60,7 +60,8 @@ url_list = get_urls(settings)
 loop = asyncio.get_event_loop()
 tmp_tasks = [(func, data['url_data'][key], data['city'], data['specialization'])
              for data in url_list
-             for func, key in parser]
+             for func, key in parsers]
+
 if tmp_tasks:
     tasks = asyncio.wait([loop.create_task(main(f)) for f in tmp_tasks])
     loop.run_until_complete(tasks)

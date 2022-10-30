@@ -6,7 +6,7 @@ from .models import Specialization, Vacancy
 
 def index(request):
     form = FindForm()
-    return render(request, 'find_jobs/index.html', {'form': form})
+    return render(request, 'scraping/index.html', {'form': form})
 
 
 def list_view(request):
@@ -27,4 +27,4 @@ def list_view(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context['object_list'] = page_obj
-    return render(request, 'find_jobs/list.html', context)
+    return render(request, 'scraping/list.html', context)

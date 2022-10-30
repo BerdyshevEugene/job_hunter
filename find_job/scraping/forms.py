@@ -1,5 +1,5 @@
 from django import forms
-from find_jobs.models import City, Specialization
+from scraping.models import City, Specialization
 
 
 class FindForm(forms.Form):

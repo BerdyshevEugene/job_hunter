@@ -1,9 +1,11 @@
+import datetime as dt
+
 from urllib import request
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 
-from find_jobs.models import Error
+from scraping.models import Error
 
 from users.forms import (UserLoginForm, UserRegistrationForm, UserUpdateForm,
                          ContactForm)
@@ -95,8 +97,8 @@ def contact(request):
                 ]}
                 Error(data=data).save()
             messages.success(request, 'Данные отправлены администрации')
-            return redirect('accounts:update')
+            return redirect('users:update')
         else:
-            return redirect('accounts:update')
+            return redirect('users:update')
     else:
-        return redirect('accounts:login')
+        return redirect('users:login')

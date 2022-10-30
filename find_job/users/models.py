@@ -42,10 +42,10 @@ class MyUser(AbstractBaseUser):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    city = models.ForeignKey('find_jobs.City', on_delete=models.SET_NULL,
+    city = models.ForeignKey('scraping.City', on_delete=models.SET_NULL,
                              null=True, blank=True)
     specialization = models.ForeignKey(
-        'find_jobs.Specialization',
+        'scraping.Specialization',
         on_delete=models.SET_NULL,
         null=True,
         blank=True

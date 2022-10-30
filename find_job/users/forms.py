@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.hashers import check_password
 
-from find_jobs.models import City, Specialization
+from scraping.models import City, Specialization
 
 User = get_user_model()
 
@@ -48,7 +48,7 @@ class UserRegistrationForm(forms.ModelForm):
     )
     class Meta:
         model = User
-        fields = ('email', )
+        fields = ('email',)
 
     def clean_password_check(self):
         data = self.cleaned_data
