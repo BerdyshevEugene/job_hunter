@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from .forms import FindForm
-from .models import Specialization, Vacancy
+from .models import Vacancy
 
 
 def index(request):

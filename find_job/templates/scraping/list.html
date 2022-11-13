@@ -2,21 +2,21 @@
 <title>{% block title %} Home {% endblock %}</title>
 
 {% block content %}
+
+{% if object_list%}
+<h3 class="my-4 text-center">Результаты по запросу:</h3>
   {% for obj in object_list %}
     <div class="card my-4">
       <h5 class="card-header"><a href="{{ obj.url }}"> {{ obj.title }}</a></h5>
       <div class="card-body">
-        <h4>{{ obj.company }}</h4>
         <p class="card-text">{{ obj.description }}</p>
+        <p>{{ obj.company }}</p>
         <p>{{ obj.city.name }} | {{ obj.specialization.name }}</p>
           <p><small>{{ obj.timestamp }}</small></p>
         {% comment %} <a href="#" class="btn btn-primary">Go somewhere</a> {% endcomment %}
       </div>
     </div>
-    {% empty %}
-      <h3 class="my-4 text-center">По вашему запросу ничего не найдено</h3>
   {% endfor %}
-{% if object_list%}
   <div class = "row">
     <div class = "col">
       <nav aria-label="...">
@@ -39,6 +39,8 @@
       </nav>
     </div>
   </div>
+{% else %}
+  <h3 class="my-4 text-center">По вашему запросу ничего не найдено</h3>
 {% endif %}
 
   <div class="row my-5">

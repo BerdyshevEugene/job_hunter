@@ -5,11 +5,11 @@ from scraping.utils import from_cyrillic_to_eng
 
 
 def default_urls():
-    return {'work_hh': '', 'work_habr': ''}
+    return {'work_habr': ''}
 
 
 class City(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, blank=True)
     slug = models.SlugField(max_length=50, blank=True, unique=True)
 
     class Meta:

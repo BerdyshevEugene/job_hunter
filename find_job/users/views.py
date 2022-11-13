@@ -88,15 +88,21 @@ def contact(request):
             if qs.exists():
                 err = qs.first()
                 data = err.data.get('user_data', [])
-                data.append({'city': city, 'email': email, 'specialization': specialization})
+                data.append(
+                    {'city': city,
+                     'email': email,
+                     'specialization': specialization}
+                )
                 err.data['user_data'] = data
                 err.save()
             else:
                 data = {'user_data': [
-                    {'city': city, 'email': email, 'specialization': specialization}
+                    {'city': city,
+                     'email': email,
+                     'specialization': specialization}
                 ]}
                 Error(data=data).save()
-            messages.success(request, 'Данные отправлены администрации')
+            messages.success(request, 'Данные отправлены администратору')
             return redirect('users:update')
         else:
             return redirect('users:update')

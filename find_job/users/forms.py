@@ -59,12 +59,12 @@ class UserRegistrationForm(forms.ModelForm):
 
 class UserUpdateForm(forms.Form):
     city = forms.ModelChoiceField(
-        queryset=City.objects.all(), to_field_name="slug", required=True,
+        queryset=City.objects.all(), to_field_name='slug', required=True,
         widget=forms.Select(attrs={'class': 'form-control'}),
         label='Город'
     )
     specialization = forms.ModelChoiceField(
-        queryset=Specialization.objects.all(), to_field_name="slug", required=True,
+        queryset=Specialization.objects.all(), to_field_name='slug', required=True,
         widget=forms.Select(attrs={'class': 'form-control'}),
         label='Специализация'
     )
@@ -81,7 +81,7 @@ class ContactForm(forms.Form):
         required=True,  widget=forms.TextInput(attrs={'class': 'form-control'}),
         label='Город'
     )
-    language = forms.CharField(
+    specialization = forms.CharField(
         required=True,  widget=forms.TextInput(attrs={'class': 'form-control'}),
         label='Специализация'
     )

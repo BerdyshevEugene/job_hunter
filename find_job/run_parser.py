@@ -14,13 +14,12 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'find_job.settings'
 import django
 django.setup()
 
-from scraping.parsers import *
+from scraping.parsers import work_habr
 from scraping.models import Vacancy, Error, Url
 
 User = get_user_model()
 
 parsers = (
-    (work_hh, 'work_hh'),
     (work_habr, 'work_habr'),
 )
 jobs, errors = [], []
@@ -45,12 +44,19 @@ def get_urls(_settings):
             if url_data:
                 tmp['url_data'] = url_dict.get(pair)
                 urls.append(tmp)
+    print(urls)
     return urls
 
 
 async def main(value):
     func, url, city, specialization = value
-    job, err = await loop.run_in_executor(None, func, url, city, specialization)
+    job, err = await loop.run_in_executor(
+        None,
+        func,
+        url,
+        city,
+        specialization
+    )
     errors.extend(err)
     jobs.extend(job)
 
@@ -86,5 +92,5 @@ w = codecs.open('work.txt', 'w', 'utf-8')
 w.write(str(jobs))
 w.close()
 
-ten_days_ago = dt.date.today() - dt.timedelta(30)
-Vacancy.objects.filter(timestamp__lte=ten_days_ago).delete()
+days_remains = dt.date.today() - dt.timedelta(30)
+Vacancy.objects.filter(timestamp__lte=days_remains).delete()
