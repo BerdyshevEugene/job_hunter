@@ -44,18 +44,18 @@ class Specialization(models.Model):
 
 class Vacancy(models.Model):
     url = models.URLField(unique=True)
-    title = models.CharField(max_length=250, verbose_name='vacancy title')
-    company = models.CharField(max_length=250, verbose_name='company')
-    description = models.TextField(verbose_name='vacancy description')
+    title = models.CharField(max_length=250, verbose_name='Заголовок вакансии')
+    company = models.CharField(max_length=250, verbose_name='Компания')
+    description = models.TextField(verbose_name='Описание вакансии')
     city = models.ForeignKey(
         'City',
         on_delete = models.CASCADE,
-        verbose_name = 'city'
+        verbose_name = 'Город'
     )
     specialization = models.ForeignKey(
         'Specialization',
         on_delete = models.CASCADE,
-        verbose_name = 'specialization'
+        verbose_name = 'Язык программирования'
     )
     timestamp = models.DateField(auto_now_add=True)
 

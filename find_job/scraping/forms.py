@@ -1,5 +1,5 @@
 from django import forms
-from scraping.models import City, Specialization
+from scraping.models import City, Specialization, Vacancy
 
 
 class FindForm(forms.Form):
@@ -17,3 +17,29 @@ class FindForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         label = 'Специальность'
     )
+
+
+class ViewForm(forms.ModelForm):
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Город'
+    )
+    specialization = forms.ModelChoiceField(
+        queryset=Specialization.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Специальность'
+    )
+    url = forms.CharField(label='URL', widget=forms.URLInput(
+        attrs={'class': 'form-control'}))
+    title = forms.CharField(label='Заголовок вакансии', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    company = forms.CharField(label='Компания', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    description = forms.CharField(label='Описание вакансии',
+                                  widget=forms.Textarea(
+                                      attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Vacancy
+        fields = '__all__'
